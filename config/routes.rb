@@ -6,4 +6,10 @@ Rails.application.routes.draw do
 
     match '/logout' => 'devise/sessions#destroy', via: [:get, :delete]
   end
+
+  resources :articles, only: [:new, :index, :create, :show] do
+    collection do
+      get :search
+    end
+  end
 end

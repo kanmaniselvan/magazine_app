@@ -1,0 +1,27 @@
+<%= render 'shared_templates/flash_messages' %>
+
+<%= form_for @article do |f| %>
+    <ul class="form-list">
+      <li class="item">
+        <%= f.label 'Title', class: 'f-label field-required' %>
+        <%= f.text_field :title, class: 'txt-box', autofocus: true %>
+      </li>
+
+      <li class="item">
+        <%= f.label 'Content', class: 'f-label field-required' %>
+        <%= f.text_area :content, class: 'txt-box' %>
+      </li>
+
+      <li class="item">
+
+      </li>
+
+      <li class="item">
+
+      </li>
+
+      <li class="item action">
+        <%= f.submit 'Create' %>
+      </li>
+    </ul>
+<% end %>

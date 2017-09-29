@@ -1,0 +1,7 @@
+<%= link_to 'Create Article', new_article_path %>
+
+<% @articles.each do |article| %>
+    <%= article.title %>
+    <%= article.content %>
+    <%= article.user.name %>
+<% end %>
