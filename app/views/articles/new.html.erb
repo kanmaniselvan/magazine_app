@@ -1,5 +1,10 @@
 <%= render 'shared_templates/flash_messages' %>
 
+<% content_for :head do %>
+    <%= stylesheet_link_tag 'articles/new' %>
+    <%= javascript_include_tag 'articles/new' %>
+<% end %>
+
 <%= form_for @article do |f| %>
     <ul class="form-list">
       <li class="item">
@@ -12,14 +17,26 @@
         <%= f.text_area :content, class: 'txt-box' %>
       </li>
 
-      <li class="item">
+      <li class="item" id="tag-sub-tags-list">
+        <% @tags.each do |index, tag_hash| %>
+            <div class="tag-cont">
+              <span class="add-new-tag">Add tag</span>
+              <%= f.label 'tags', class: 'f-label field-required' %>
+              <%= text_field_tag "article[tags][#{index}][name]", tag_hash[:name], class: 'tag-ip' %>
 
+              <br/>
+
+              <span class="add-new-sub-tag">Add Sub tag</span>
+              <ul class="sub-tag-list-cont">
+                <% tag_hash[:sub_tags].each do |sub_tag_name| %>
+                    <li class="sub-tag-list">
+                      <%= text_field_tag "article[tags][#{index}][sub_tags][]",  sub_tag_name, class: 'sub-tag-ip' %>
+                    </li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
       </li>
-
-      <li class="item">
-
-      </li>
-
       <li class="item action">
         <%= f.submit 'Create' %>
       </li>

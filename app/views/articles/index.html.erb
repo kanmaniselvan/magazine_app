@@ -1,7 +1,26 @@
 <%= link_to 'Create Article', new_article_path %>
 
+<br>
+<label for="search-box">
+  <input id="search-box" type="text" />
+</label>
+
+<br>
+
 <% @articles.each do |article| %>
     <%= article.title %>
     <%= article.content %>
     <%= article.user.name %>
 <% end %>
+
+<script type="application/javascript">
+    var search_path = '<%= search_articles_path %>';
+    $('#search-box').on('keydown', function(event){
+        if(13 === event.keyCode) {
+            var search_text = $(this).val();
+            if(0 !== search_text.length) {
+                window.location.href = search_path + '?q=' + search_text;
+            }
+        }
+    });
+</script>
