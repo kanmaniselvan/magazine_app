@@ -7,6 +7,7 @@ class Article < ApplicationRecord
 
   validates_uniqueness_of :title, scope: [:user_id]
 
+  # Create articles. Create tags / subtags and links with the article.
   def self.save_article(create_params)
     article = nil
 
@@ -40,6 +41,6 @@ class Article < ApplicationRecord
     # Search in Tag's name, since sub tags are children of tags.
     result_ids += Tag.where('name like ?', "%#{query}%").pluck(:article_id)
 
-    Article.where(id: result_ids).includes(:user, tags: :sub_tags)
+    Article.where(id: result_ids)
   end
 end

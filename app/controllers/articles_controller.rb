@@ -1,11 +1,10 @@
 class ArticlesController < ApplicationController
   def new
     @article = Article.new
-    @tags = { 1 => { name: '', sub_tags: [''] } }
   end
 
   def index
-    @articles = Article.all.order('created_at asc').includes(:user, tags: :sub_tags)
+    @articles = Article.all.order('created_at asc')
   end
 
   def create
@@ -14,8 +13,12 @@ class ArticlesController < ApplicationController
     redirect_to article_path(id: @article.id)
 
   rescue StandardError => e
-    flash.now[:error] = e.message
+    # Special handling for the tag name validation alone.
+    # Rest of the exception messages are descriptive enough work fine.
+    flash.now[:error] = e.message.gsub(/Validation failed: Name/, 'Validation failed: Tag name')
 
+    # Build these two variables, which are necessary for retaining the information
+    # entered by the user after error.
     @tags = create_params.delete(:tags)
     @article = Article.new(create_params.delete_if{|k, v| 'tags' == k })
     render :new
@@ -25,7 +28,7 @@ class ArticlesController < ApplicationController
     @article = Article.where(id: params[:id]).includes(:user, tags: :sub_tags).first
 
     if @article.blank?
-      flash.now[:error] = 'Article not found for the specified URL.'
+      flash[:error] = 'Article not found for the specified URL.'
 
       redirect_to articles_path
     end
@@ -33,6 +36,11 @@ class ArticlesController < ApplicationController
 
   def search
     @articles = Article.perform_search_and_get_results(params[:q])
+
+    if @article.blank?
+      flash.now[:alert] = 'Articles not found for the specified search query.'
+    end
+
     render :index
   end
 

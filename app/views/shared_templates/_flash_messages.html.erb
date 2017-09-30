@@ -20,3 +20,12 @@
     background-color: #00a43e;
   }
 </style>
+
+<script>
+  setTimeout(function () {
+      $('.flash-msg').fadeOut(300, function(){
+          $(this).remove();
+      });
+  }, 5000);
+
+</script>
