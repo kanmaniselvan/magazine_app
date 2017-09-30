@@ -1,17 +1,21 @@
-<%= link_to 'Create Article', new_article_path %>
-
-<br>
-<label for="search-box">
-  <input id="search-box" type="text" />
-</label>
-
-<br>
-
-<% @articles.each do |article| %>
-    <%= article.title %>
-    <%= article.content %>
-    <%= article.user.name %>
+<% content_for :head do %>
+    <%= stylesheet_link_tag 'articles/index' %>
 <% end %>
+
+<div class="page-wrap">
+  <%= render 'shared_templates/articles_header' %>
+
+  <div class="articles-list-container">
+    <ul id="articles-list">
+      <% @articles.each do |article| %>
+          <li class="article-list-li">
+            <h3>Name: <%= link_to article.title, article_path(id: article.id) %> </h3>
+            <h4>Created at: <%= article.created_at.strftime('%d-%m-%y') %></h4>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 <script type="application/javascript">
     var search_path = '<%= search_articles_path %>';

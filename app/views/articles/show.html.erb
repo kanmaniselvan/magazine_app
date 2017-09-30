@@ -1,4 +1,31 @@
-<%= @article.title %>
-<%= @article.content %>
-<%= @article.user.name %>
-<%#todo @article.tags %>
+<% content_for :head do %>
+    <%= stylesheet_link_tag 'articles/index' %>
+<% end %>
+
+<%= render 'shared_templates/articles_header' %>
+
+<div class="articles-list-container">
+  <ul id="articles-list">
+    <li class="article-list-li">
+      <h3>Name: <%= @article.title %> </h3>
+      <h4>Content: <%= @article.content %> </h4>
+      <h4>Author: <%= @article.user.name %> </h4>
+      <h4>Created at: <%= @article.created_at.strftime('%d-%m-%y') %></h4>
+      <h4>
+        <% @article.tags.each do |tag| %>
+            Tag: <span class="high-light"><%= tag.name %></span>
+            <% sub_tags = ''
+              tag.sub_tags.each_with_index do |sub_tag, index|
+              if index.zero?
+                sub_tags += "Sub tags: <span class='high-light small'>#{sub_tag.name}</span>"
+              else
+                sub_tags += "<span class='high-light small'>#{sub_tag.name}</span>"
+              end
+            end %>
+
+            <%= sub_tags.html_safe %>
+        <% end %>
+      </h4>
+    </li>
+  </ul>
+</div>

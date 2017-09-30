@@ -15,13 +15,17 @@ class Article < ApplicationRecord
       # Create article
       article = Article.create!(create_params.delete_if{|k, v| 'tags' == k })
 
-      tags.each do |index, tag_sub_tags_hash|
-        # Create tag
-        tag = article.tags.create!(name: tag_sub_tags_hash[:name])
+      if tags.present?
+        tags.each do |index, tag_sub_tags_hash|
+          # Create tag
+          tag = article.tags.create!(name: tag_sub_tags_hash[:name])
 
-        # Create Subtags
-        tag_sub_tags_hash[:sub_tags].uniq.each do |sub_tag_name|
-          tag.sub_tags.create!(name: sub_tag_name, parent_id: tag.id, article_id: article.id)
+          # Create Subtags
+          if tag_sub_tags_hash[:sub_tags].present?
+            tag_sub_tags_hash[:sub_tags].uniq.each do |sub_tag_name|
+              tag.sub_tags.create!(name: sub_tag_name, parent_id: tag.id, article_id: article.id)
+            end
+          end
         end
       end
     end

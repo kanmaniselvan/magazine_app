@@ -1,0 +1,12 @@
+<div class="search-header-wrap-container">
+  <div class="search-cont">
+    <% if 'index' == params['action'] %>
+        <input id="search-box" type="text" placeholder="Search for articles ..."/>
+        <%= link_to 'Create a new Article', new_article_path, class: 'btn' %>
+    <% else %>
+        <%= link_to 'Home', articles_path, class: 'btn link' %>
+    <% end %>
+
+    <%= link_to 'Log out', '/logout', class: 'log-out-link' %>
+  </div>
+</div>

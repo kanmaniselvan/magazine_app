@@ -1,0 +1,47 @@
+.form-box, .sub-tag-list-cont {
+  list-style: none;
+}
+
+.new-article.form-box  {
+  margin-left: 10%;
+  margin-top: 5%;
+  width: 80%;
+  padding: 20px;
+  font-size: 14px;
+  border-radius: 3px;
+  background-color: #fbfbfb;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  label {
+    min-width: 50px;
+  }
+
+  textarea {
+    width: 95%;
+    height: 100px;
+    border: 1px solid #000000;
+  }
+
+  #tag-sub-tags-list {
+    input {
+      width: 100px;
+    }
+  }
+
+  .tag-actions, .add-new-tag {
+    float: right;
+    text-transform: lowercase;
+    font-size: 12px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
+  .add-new-tag, .add-new-sub-tag {
+    color: #00a43e;
+  }
+
+  .remove-tag, .remove-sub-tag {
+    color: #ee4b4c;
+  }
+}
+
+
